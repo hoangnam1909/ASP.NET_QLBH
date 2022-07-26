@@ -23,7 +23,8 @@ namespace QLBH_NguyenHoangNam.Controllers
         }
 
         public ActionResult CreateProduct()
-        {            
+        {
+            ViewData["SupplierDropDownList"] = new SelectList(da.Suppliers, "SupplierID", "CompanyName");
             return View();
         }
 

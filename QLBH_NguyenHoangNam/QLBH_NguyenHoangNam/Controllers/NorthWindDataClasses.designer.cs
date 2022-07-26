@@ -54,7 +54,7 @@ namespace QLBH_NguyenHoangNam.Controllers
     #endregion
 		
 		public NorthWindDataClassesDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["NorthwindConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["NorthwindConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -176,7 +176,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CategoryID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CategoryID", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int CategoryID
 		{
 			get
@@ -216,7 +216,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="NVarChar(MAX)")]
 		public string Description
 		{
 			get
@@ -370,7 +370,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SupplierID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SupplierID", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int SupplierID
 		{
 			get
@@ -590,7 +590,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomePage", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_HomePage", DbType="NVarChar(MAX)")]
 		public string HomePage
 		{
 			get
@@ -720,7 +720,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="NChar(5) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="NVarChar(5) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string CustomerID
 		{
 			get
@@ -1020,19 +1020,15 @@ namespace QLBH_NguyenHoangNam.Controllers
 		
 		private string _Extension;
 		
-		private System.Data.Linq.Binary _Photo;
+		private string _Photo;
 		
 		private string _Notes;
 		
 		private System.Nullable<int> _ReportsTo;
 		
-		private string _PhotoPath;
-		
-		private EntitySet<Employee> _Employees;
+		private System.Nullable<int> _GroupID;
 		
 		private EntitySet<Order> _Orders;
-		
-		private EntityRef<Employee> _Employee1;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1066,21 +1062,19 @@ namespace QLBH_NguyenHoangNam.Controllers
     partial void OnHomePhoneChanged();
     partial void OnExtensionChanging(string value);
     partial void OnExtensionChanged();
-    partial void OnPhotoChanging(System.Data.Linq.Binary value);
+    partial void OnPhotoChanging(string value);
     partial void OnPhotoChanged();
     partial void OnNotesChanging(string value);
     partial void OnNotesChanged();
     partial void OnReportsToChanging(System.Nullable<int> value);
     partial void OnReportsToChanged();
-    partial void OnPhotoPathChanging(string value);
-    partial void OnPhotoPathChanged();
+    partial void OnGroupIDChanging(System.Nullable<int> value);
+    partial void OnGroupIDChanged();
     #endregion
 		
 		public Employee()
 		{
-			this._Employees = new EntitySet<Employee>(new Action<Employee>(this.attach_Employees), new Action<Employee>(this.detach_Employees));
 			this._Orders = new EntitySet<Order>(new Action<Order>(this.attach_Orders), new Action<Order>(this.detach_Orders));
-			this._Employee1 = default(EntityRef<Employee>);
 			OnCreated();
 		}
 		
@@ -1364,8 +1358,8 @@ namespace QLBH_NguyenHoangNam.Controllers
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Photo", DbType="Image", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary Photo
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Photo", DbType="NVarChar(255)")]
+		public string Photo
 		{
 			get
 			{
@@ -1384,7 +1378,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="NText", UpdateCheck=UpdateCheck.Never)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Notes", DbType="NVarChar(MAX)")]
 		public string Notes
 		{
 			get
@@ -1415,10 +1409,6 @@ namespace QLBH_NguyenHoangNam.Controllers
 			{
 				if ((this._ReportsTo != value))
 				{
-					if (this._Employee1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnReportsToChanging(value);
 					this.SendPropertyChanging();
 					this._ReportsTo = value;
@@ -1428,36 +1418,23 @@ namespace QLBH_NguyenHoangNam.Controllers
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhotoPath", DbType="NVarChar(255)")]
-		public string PhotoPath
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_GroupID", DbType="Int")]
+		public System.Nullable<int> GroupID
 		{
 			get
 			{
-				return this._PhotoPath;
+				return this._GroupID;
 			}
 			set
 			{
-				if ((this._PhotoPath != value))
+				if ((this._GroupID != value))
 				{
-					this.OnPhotoPathChanging(value);
+					this.OnGroupIDChanging(value);
 					this.SendPropertyChanging();
-					this._PhotoPath = value;
-					this.SendPropertyChanged("PhotoPath");
-					this.OnPhotoPathChanged();
+					this._GroupID = value;
+					this.SendPropertyChanged("GroupID");
+					this.OnGroupIDChanged();
 				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Employee", Storage="_Employees", ThisKey="EmployeeID", OtherKey="ReportsTo")]
-		public EntitySet<Employee> Employees
-		{
-			get
-			{
-				return this._Employees;
-			}
-			set
-			{
-				this._Employees.Assign(value);
 			}
 		}
 		
@@ -1471,40 +1448,6 @@ namespace QLBH_NguyenHoangNam.Controllers
 			set
 			{
 				this._Orders.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Employee_Employee", Storage="_Employee1", ThisKey="ReportsTo", OtherKey="EmployeeID", IsForeignKey=true)]
-		public Employee Employee1
-		{
-			get
-			{
-				return this._Employee1.Entity;
-			}
-			set
-			{
-				Employee previousValue = this._Employee1.Entity;
-				if (((previousValue != value) 
-							|| (this._Employee1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Employee1.Entity = null;
-						previousValue.Employees.Remove(this);
-					}
-					this._Employee1.Entity = value;
-					if ((value != null))
-					{
-						value.Employees.Add(this);
-						this._ReportsTo = value.EmployeeID;
-					}
-					else
-					{
-						this._ReportsTo = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("Employee1");
-				}
 			}
 		}
 		
@@ -1526,18 +1469,6 @@ namespace QLBH_NguyenHoangNam.Controllers
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-		
-		private void attach_Employees(Employee entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee1 = this;
-		}
-		
-		private void detach_Employees(Employee entity)
-		{
-			this.SendPropertyChanging();
-			entity.Employee1 = null;
 		}
 		
 		private void attach_Orders(Order entity)
@@ -1875,7 +1806,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int OrderID
 		{
 			get
@@ -1895,7 +1826,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="NChar(5)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="NVarChar(5)")]
 		public string CustomerID
 		{
 			get
@@ -2343,7 +2274,7 @@ namespace QLBH_NguyenHoangNam.Controllers
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductID", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int ProductID
 		{
 			get

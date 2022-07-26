@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Northwind" Class="NorthWindDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=b26;Initial Catalog=Northwind;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NorthwindConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=LIGHTNING;Initial Catalog=Northwind;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="NorthwindConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Categories" Member="Categories">
     <Type Name="Category">
-      <Column Name="CategoryID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="CategoryID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="CategoryName" Type="System.String" DbType="NVarChar(15) NOT NULL" CanBeNull="false" />
-      <Column Name="Description" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Description" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="Picture" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
       <Association Name="Category_Product" Member="Products" ThisKey="CategoryID" OtherKey="CategoryID" Type="Product" />
     </Type>
   </Table>
   <Table Name="dbo.Suppliers" Member="Suppliers">
     <Type Name="Supplier">
-      <Column Name="SupplierID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SupplierID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="CompanyName" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
       <Column Name="ContactName" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Column Name="ContactTitle" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
@@ -22,13 +22,13 @@
       <Column Name="Country" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
       <Column Name="Phone" Type="System.String" DbType="NVarChar(24)" CanBeNull="true" />
       <Column Name="Fax" Type="System.String" DbType="NVarChar(24)" CanBeNull="true" />
-      <Column Name="HomePage" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="HomePage" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="Supplier_Product" Member="Products" ThisKey="SupplierID" OtherKey="SupplierID" Type="Product" />
     </Type>
   </Table>
   <Table Name="dbo.Customers" Member="Customers">
     <Type Name="Customer">
-      <Column Name="CustomerID" Type="System.String" DbType="NChar(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.String" DbType="NVarChar(5) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="CompanyName" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
       <Column Name="ContactName" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Column Name="ContactTitle" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
@@ -58,13 +58,11 @@
       <Column Name="Country" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
       <Column Name="HomePhone" Type="System.String" DbType="NVarChar(24)" CanBeNull="true" />
       <Column Name="Extension" Type="System.String" DbType="NVarChar(4)" CanBeNull="true" />
-      <Column Name="Photo" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
-      <Column Name="Notes" Type="System.String" DbType="NText" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="Photo" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="Notes" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ReportsTo" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="PhotoPath" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Association Name="Employee_Employee" Member="Employees" ThisKey="EmployeeID" OtherKey="ReportsTo" Type="Employee" />
+      <Column Name="GroupID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Employee_Order" Member="Orders" ThisKey="EmployeeID" OtherKey="EmployeeID" Type="Order" />
-      <Association Name="Employee_Employee" Member="Employee1" ThisKey="ReportsTo" OtherKey="EmployeeID" Type="Employee" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.[Order Details]" Member="Order_Details">
@@ -80,8 +78,8 @@
   </Table>
   <Table Name="dbo.Orders" Member="Orders">
     <Type Name="Order">
-      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="CustomerID" Type="System.String" DbType="NChar(5)" CanBeNull="true" />
+      <Column Name="OrderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
       <Column Name="EmployeeID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="OrderDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="RequiredDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
@@ -101,7 +99,7 @@
   </Table>
   <Table Name="dbo.Products" Member="Products">
     <Type Name="Product">
-      <Column Name="ProductID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProductID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ProductName" Type="System.String" DbType="NVarChar(40) NOT NULL" CanBeNull="false" />
       <Column Name="SupplierID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="CategoryID" Type="System.Int32" DbType="Int" CanBeNull="true" />
